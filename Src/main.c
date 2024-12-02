@@ -7454,7 +7454,7 @@ void LCD_Init(void)
 
 void SEND_()
 	{
-		uint16_t x;
+		uint32_t x;
 		SPI_DC_H();        //DC置高，发送数�???
 		for(x=0;x<115200;x++)    //循环填充像素
 		{
