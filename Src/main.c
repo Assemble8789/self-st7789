@@ -20,6 +20,7 @@
 
 /* Includes ------------------------------------------------------------------*/
 #include "main.h"
+#include "cmsis_os.h"
 #include "spi.h"
 #include "usart.h"
 #include "gpio.h"
@@ -52,6 +53,7 @@
 
 /* Private function prototypes -----------------------------------------------*/
 void SystemClock_Config(void);
+void MX_FREERTOS_Init(void);
 /* USER CODE BEGIN PFP */
 
 /* USER CODE END PFP */
@@ -7272,7 +7274,7 @@ uint8_t SPI_WriteByte(uint8_t *TxData,uint16_t size)
     return HAL_SPI_Transmit(&hspi2,TxData,size,0xffff);
 }
 
-void SPI_WriteCmd(uint8_t Data)	//写命�???
+void SPI_WriteCmd(uint8_t Data)	//写命�????
 {
 	SPI_DC_L();
 	SPI_I2S_SendData(&hspi2,Data);
@@ -7280,22 +7282,22 @@ void SPI_WriteCmd(uint8_t Data)	//写命�???
 
 }
  
-void LCD_WriteData8(uint8_t Data)	//�???8位数�???
+void LCD_WriteData8(uint8_t Data)	//�????8位数�????
 {
 	SPI_DC_H();
 	SPI_I2S_SendData(&hspi2,Data);
   //HAL_SPI_Transmit(&hspi2,Data,1,0xffff);
 }
  
-void LCD_WriteData16(uint16_t Data)	//�???16位数�???
+void LCD_WriteData16(uint16_t Data)	//�????16位数�????
 {
 	SPI_DC_H();
-	SPI_I2S_SendData(&hspi2,(Data>>8) ) ;	//Date右移8�???
+	SPI_I2S_SendData(&hspi2,(Data>>8) ) ;	//Date右移8�????
 	SPI_I2S_SendData(&hspi2,Data);
   //HAL_SPI_Transmit(&hspi2,(Data>>8),1,0xffff);		
   //HAL_SPI_Transmit(&hspi2,Data,1,0xffff);
 }
-void LCD_SetRegion(uint16_t x0, uint16_t y0, uint16_t x1, uint16_t y1)//设置显示区域（x0，y0，x1，y1�???
+void LCD_SetRegion(uint16_t x0, uint16_t y0, uint16_t x1, uint16_t y1)//设置显示区域（x0，y0，x1，y1�????
 {
 	SPI_WriteCmd(0x2a);
 	LCD_WriteData16(x0);
@@ -7303,7 +7305,7 @@ void LCD_SetRegion(uint16_t x0, uint16_t y0, uint16_t x1, uint16_t y1)//设置�
 	SPI_WriteCmd(0x2b);
 	LCD_WriteData16(y0);
 	LCD_WriteData16(y1);
-	SPI_WriteCmd(0x2c);	        //下面发�?�的是数�???
+	SPI_WriteCmd(0x2c);	        //下面发�?�的是数�????
 }
 
 // void LCD_Address_Set(uint16_t x1, uint16_t y1, uint16_t x2, uint16_t y2)
@@ -7322,19 +7324,19 @@ void LCD_SetRegion(uint16_t x0, uint16_t y0, uint16_t x1, uint16_t y1)//设置�
 //     LCD_Write_Data(y2 >> 8);
 //     LCD_Write_Data(y2);
 
-//     /* 发送该命令，LCD开始等待接收显存数据 */
+//     /* 发�?�该命令，LCD�?始等待接收显存数�? */
 //     SPI_WriteCmd(0x2C);
 // }
 void LCD_Clear(uint16_t color)
 {
     uint16_t i, j;
-    uint8_t data[2] = {0};  //color�?16bit的，每个像素点需要两个字节的显存
+    uint8_t data[2] = {0};  //color�??16bit的，每个像素点需要两个字节的显存
 
-    /* �?16bit的color值分�?为两个单独的字节 */
+    /* �??16bit的color值分�??为两个单独的字节 */
     data[0] = color >> 8;
     data[1] = color;
 
-    /* 显存的�?�需要�?�字节写�? */
+    /* 显存的�?�需要�?�字节写�?? */
     for(j = 0; j < LCD_Buf_Size / 2; j++)
     {
         lcd_buf[j * 2] =  data[0];
@@ -7343,7 +7345,7 @@ void LCD_Clear(uint16_t color)
     /* 指定显存操作地址为全屏幕 */
     //LCD_Address_Set(0, 0, LCD_Width - 1, LCD_Height - 1);
     LCD_SetRegion(0, 0, LCD_Width - 1, LCD_Height - 1);
-    /* 指定接下来的数据为数�? */
+    /* 指定接下来的数据为数�?? */
     SPI_DC_H();
     //LCD_WR_RS(1);
     /* 将显存缓冲区的数据全部写入缓冲区 */
@@ -7363,8 +7365,8 @@ void LCD_Init(void)
   HAL_Delay(50);
 	//Delay_ms(50);                //复位屏幕
 	
-	SPI_WriteCmd(0x3A);						//设置颜色格式�???16位真�???
-	LCD_WriteData8(0x05);				//03 4K�???05 65K�???06 262K
+	SPI_WriteCmd(0x3A);						//设置颜色格式�????16位真�????
+	LCD_WriteData8(0x05);				//03 4K�????05 65K�????06 262K
 	
 	SPI_WriteCmd(0x36);			//设置屏幕方向为从上到下，从左到右
 	LCD_WriteData8(0x00);
@@ -7455,11 +7457,11 @@ void LCD_Init(void)
 void SEND_()
 	{
 		uint32_t x;
-		SPI_DC_H();        //DC置高，发送数�???
+		SPI_DC_H();        //DC置高，发送数�????
 		for(x=0;x<115200;x++)    //循环填充像素
 		{
 			//HAL_SPI_Transmit(,buff[x],1,0xffff);
-      SPI_I2S_SendData(&hspi2,buff[x]);    //将图片数组的元素通过SPI发�?�给IPS�???
+      SPI_I2S_SendData(&hspi2,buff[x]);    //将图片数组的元素通过SPI发�?�给IPS�????
 		}
 	}
 /* USER CODE END 0 */
@@ -7502,6 +7504,14 @@ int main(void)
       //SEND_();
   /* USER CODE END 2 */
 
+  /* Call init function for freertos objects (in freertos.c) */
+  MX_FREERTOS_Init();
+
+  /* Start scheduler */
+  osKernelStart();
+  
+  /* We should never get here as control is now taken by the scheduler */
+
   /* Infinite loop */
   /* USER CODE BEGIN WHILE */
   while (1)
@@ -7510,9 +7520,9 @@ int main(void)
 
     /* USER CODE BEGIN 3 */
     //printf("555\r\n");
-      LCD_SetRegion(0,0,239,239);
-      SEND_();
-      HAL_Delay(100);
+      //LCD_SetRegion(0,0,239,239);
+      //SEND_();
+      //HAL_Delay(100);
     //HAL_Delay(50);
     
     
@@ -7573,6 +7583,27 @@ void SystemClock_Config(void)
 /* USER CODE BEGIN 4 */
 
 /* USER CODE END 4 */
+
+/**
+  * @brief  Period elapsed callback in non blocking mode
+  * @note   This function is called  when TIM1 interrupt took place, inside
+  * HAL_TIM_IRQHandler(). It makes a direct call to HAL_IncTick() to increment
+  * a global variable "uwTick" used as application time base.
+  * @param  htim : TIM handle
+  * @retval None
+  */
+void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim)
+{
+  /* USER CODE BEGIN Callback 0 */
+
+  /* USER CODE END Callback 0 */
+  if (htim->Instance == TIM1) {
+    HAL_IncTick();
+  }
+  /* USER CODE BEGIN Callback 1 */
+
+  /* USER CODE END Callback 1 */
+}
 
 /**
   * @brief  This function is executed in case of error occurrence.

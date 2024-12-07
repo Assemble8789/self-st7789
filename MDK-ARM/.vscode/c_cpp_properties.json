@@ -8,11 +8,16 @@
                 "d:\\download\\learning\\program\\robo_master\\start2\\Drivers\\STM32F4xx_HAL_Driver\\Inc\\Legacy",
                 "d:\\download\\learning\\program\\robo_master\\start2\\Drivers\\CMSIS\\Device\\ST\\STM32F4xx\\Include",
                 "d:\\download\\learning\\program\\robo_master\\start2\\Drivers\\CMSIS\\Include",
+                "d:\\download\\learning\\program\\robo_master\\start2\\Middlewares\\Third_Party\\FreeRTOS\\Source\\include",
+                "d:\\download\\learning\\program\\robo_master\\start2\\Middlewares\\Third_Party\\FreeRTOS\\Source\\CMSIS_RTOS",
+                "d:\\download\\learning\\program\\robo_master\\start2\\Middlewares\\Third_Party\\FreeRTOS\\Source\\portable\\RVDS\\ARM_CM4F",
                 "D:\\download\\MDK5\\ARM\\ARMCC\\include",
                 "D:\\download\\MDK5\\ARM\\ARMCC\\include\\rw",
                 "d:\\download\\learning\\program\\robo_master\\start2\\MDK-ARM",
                 "d:\\download\\learning\\program\\robo_master\\start2\\Src",
-                "d:\\download\\learning\\program\\robo_master\\start2\\Drivers\\STM32F4xx_HAL_Driver\\Src"
+                "d:\\download\\learning\\program\\robo_master\\start2\\Drivers\\STM32F4xx_HAL_Driver\\Src",
+                "d:\\download\\learning\\program\\robo_master\\start2\\Middlewares\\Third_Party\\FreeRTOS\\Source",
+                "d:\\download\\learning\\program\\robo_master\\start2\\Middlewares\\Third_Party\\FreeRTOS\\Source\\portable\\MemMang"
             ],
             "defines": [
                 "USE_HAL_DRIVER",
